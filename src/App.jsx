@@ -39,22 +39,21 @@ const App = () => {
       <BackgroundImage />
       <main className="w-full flex flex-wrap gap-8 py-4 px-[10%] justify-center items-center">
         <WeatherCard
-          temperature={weather.temp}
+          temperature={weather.temp_c}
           place={place}
-          windspeed={weather.wspd}
+          windspeed={weather.wind_kph}
           humidity={weather.humidity}
-          heatIndex={weather.heatindex}
-          iconString={weather.conditions}
-          conditions={weather.conditions}
+          iconUrl={weather.condition ? weather.condition.icon : ""}
+          conditions={weather.condition ? weather.condition.text : ""}
         />
         <div className="flex justify-center gap-8 flex-wrap w-[60%]">
           {values?.slice(1, 7).map((curr) => {
             return (
               <MiniCard
-                key={curr.datetime}
-                time={curr.datetime}
-                temp={curr.temp}
-                iconString={curr.conditions}
+                key={curr.date}
+                time={curr.date}
+                temp={curr.day.avgtemp_c}
+                iconUrl={curr.day.condition ? curr.day.condition.icon : ""}
               />
             );
           })}

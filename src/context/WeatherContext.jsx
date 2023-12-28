@@ -14,27 +14,21 @@ export const StateContextProvider = ({ children }) => {
   const fetchWeather = async () => {
     const options = {
       method: "GET",
-      url: "https://visual-crossing-weather.p.rapidapi.com/forecast",
+      url: "https://api.weatherapi.com/v1/forecast.json",
       params: {
-        aggregateHours: "24",
-        location: place,
-        contentType: "json",
-        unitGroup: "metric",
-        shortColumnNames: 0,
-      },
-      headers: {
-        "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
-        "X-RapidAPI-Host": "visual-crossing-weather.p.rapidapi.com",
+        key: import.meta.env.VITE_API_KEY,
+        q: place,
+        days: 7,
       },
     };
 
     try {
       const response = await axios.request(options);
+      const thisData = response.data;
       // console.log(response.data);
-      const thisData = Object.values(response.data.locations)[0];
-      setLocation(thisData.address);
-      setValues(thisData.values);
-      setWeather(thisData.values[0]);
+      setLocation(thisData.location.name);
+      setValues(thisData.forecast.forecastday);
+      setWeather(thisData.current);
     } catch (e) {
       console.error(e);
       alert("This place does not exist");
@@ -44,6 +38,7 @@ export const StateContextProvider = ({ children }) => {
   useEffect(() => {
     fetchWeather();
   }, [place]);
+
   return (
     <StateContext.Provider
       value={{
