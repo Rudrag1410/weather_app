@@ -1,9 +1,18 @@
 import { useState } from "react";
-import seatchIcon from "./assets/icon/search.svg";
+import seatchIcon from "./assets/icons/search.svg";
+import BackgroundImage from "./components/BackgroundImage";
+import WeatherCard from "./components/WeatherCard";
+import MiniCard from "./components/MiniCard";
+import { useStateContext } from "./context/WeatherContext";
 const App = () => {
   const [input, setInput] = useState("");
+  const { weather, values, setPlace, place } = useStateContext();
+  const submitCity = () => {
+    setPlace(input);
+    setInput("");
+  };
   return (
-    <header className="w-full h-screen text-white px-8">
+    <div className="w-full h-screen text-white px-8">
       <nav className="w-full p-3 flex justify-between items-center">
         <h1 className="font-bold tracking-wide text-3xl">Weather App</h1>
         <div className="bg-white w-[15rem] overflow-hidden shadow-2xl rounded flex justify-center p-2 gap-2">
@@ -15,7 +24,7 @@ const App = () => {
           <input
             onKeyUp={(e) => {
               if (e.key === "Enter") {
-                // sumit the form
+                submitCity();
               }
             }}
             type="text"
@@ -27,7 +36,31 @@ const App = () => {
           />
         </div>
       </nav>
-    </header>
+      <BackgroundImage />
+      <main className="w-full flex flex-wrap gap-8 py-4 px-[10%] justify-center items-center">
+        <WeatherCard
+          temperature={weather.temp}
+          place={place}
+          windspeed={weather.wspd}
+          humidity={weather.humidity}
+          heatIndex={weather.heatindex}
+          iconString={weather.conditions}
+          conditions={weather.conditions}
+        />
+        <div className="flex justify-center gap-8 flex-wrap w-[60%]">
+          {values?.slice(1, 7).map((curr) => {
+            return (
+              <MiniCard
+                key={curr.datetime}
+                time={curr.datetime}
+                temp={curr.temp}
+                iconString={curr.conditions}
+              />
+            );
+          })}
+        </div>
+      </main>
+    </div>
   );
 };
 
