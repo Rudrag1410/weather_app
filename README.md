@@ -6,8 +6,6 @@
 
 ## For Styling i have use Taiwlind css
 
-## Project Url => Git ::
-
-[Visit Project on GitHub](https://github.com/Rudrag1410/weather_app/)
+[Visit More Project](https://github.com/Rudrag1410/)
 
 ![Project Image](images/cover.png)
