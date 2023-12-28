@@ -14,35 +14,35 @@ const BackgroundImage = () => {
 
   useEffect(() => {
     const getWeatherImage = () => {
-      const imageString = weather.conditions.toLowerCase();
+      if (weather && weather.condition && weather.condition.text) {
+        const imageString = weather.condition.text.toLowerCase();
 
-      if (imageString.includes("clear")) {
-        setImage(clearImage);
-      } else if (imageString.includes("cloud")) {
-        setImage(cloudyImage);
-      } else if (imageString.includes("snow")) {
-        setImage(snowyImage);
-      } else if (imageString.includes("sunny")) {
-        setImage(sunnyImage);
-      } else if (imageString.includes("fog")) {
-        setImage(fogImage);
-      } else if (
-        imageString.includes("thunder") ||
-        imageString.includes("storm")
-      ) {
-        setImage(stormyImage);
-      } else if (
-        imageString.includes("rain") ||
-        imageString.includes("shower")
-      ) {
-        setImage(rainyImage);
+        if (imageString.includes("clear")) {
+          setImage(clearImage);
+        } else if (imageString.includes("cloud")) {
+          setImage(cloudyImage);
+        } else if (imageString.includes("snow")) {
+          setImage(snowyImage);
+        } else if (imageString.includes("sunny")) {
+          setImage(sunnyImage);
+        } else if (imageString.includes("fog")) {
+          setImage(fogImage);
+        } else if (
+          imageString.includes("thunder") ||
+          imageString.includes("storm")
+        ) {
+          setImage(stormyImage);
+        } else if (
+          imageString.includes("rain") ||
+          imageString.includes("shower")
+        ) {
+          setImage(rainyImage);
+        }
       }
     };
 
-    if (weather.conditions) {
-      getWeatherImage();
-    }
-  }, [weather.conditions]);
+    getWeatherImage();
+  }, [weather]);
 
   return (
     <img
